@@ -1,7 +1,7 @@
 const welcomeTexts = [
-  { main: "Website Kenangan", sub: "Tempat menyimpan cerita kita." },
-  { main: "Untuk Kenangan Indah", sub: "Semua momen spesial tersimpan di sini." },
-  { main: "Untuk Aku dan Kamu", sub: "Terima kasih sudah menjadi bagian dari hidupku." }
+  { main: "Biriciğim Sudem", sub: "Kalbimin en güzel köşesi sensin. 🤍" },
+  { main: "Sana Küçük Bir Sürpriz", sub: "Gülüşün dünyamı güzelleştiriyor. 💗" },
+  { main: "İyi Ki Varsın", sub: "Seni çok seviyorum birtanem. 🤍" }
 ];
 
 let textIndex = 0;
@@ -46,13 +46,11 @@ function enterWebsite() {
   setTimeout(() => {
     welcome.style.display = "none";
     main.classList.add("show-content");
-    audio.volume = 0.5;
-    audio.play().catch(error => {
-      console.log("Autoplay blocked:", error);
-    });
+    // Şarkı, kullanıcı isterse YouTube oynatıcısından başlatılır.
   }, 800);
 }
 
+// Sayaç başlangıç tarihi: İstersen buradaki tarihi kendi özel gününüzle değiştir.
 const startDate = new Date("2023-02-14T00:00:00").getTime();
 
 function updateTimer() {
@@ -90,7 +88,7 @@ function playSong(key) {
 
   if (currentPlayingKey === key) {
     if (audio.paused) {
-      audio.play();
+      audio.play().catch(error => console.log("Müzik oynatılamadı:", error));
       playerBar.classList.add("show-player");
       updatePlayerUI(true, song.title);
       updateListIcon(key, true);
@@ -104,7 +102,9 @@ function playSong(key) {
     currentPlayingKey = key;
     audio.src = song.url;
     audio.volume = 1.0;
-    audio.play();
+    audio.play().catch(error => {
+      console.log("Müzik oynatılamadı:", error);
+    });
 
     playerBar.classList.add("show-player");
     updatePlayerUI(true, song.title);
@@ -117,13 +117,21 @@ function playSong(key) {
   }
 }
 
+function scrollToSudemSong() {
+  const songSection = document.getElementById("sudemSong");
+  if (songSection) {
+    songSection.scrollIntoView({ behavior: "smooth", block: "center" });
+    songSection.classList.add("active");
+  }
+}
+
 function toggleMusic() {
   if (!currentPlayingKey) return;
 
   const playerBar = document.getElementById("playerBar");
 
   if (audio.paused) {
-    audio.play();
+    audio.play().catch(error => console.log("Müzik oynatılamadı:", error));
     playerBar.classList.add("show-player");
     updatePlayerUI(true);
     updateListIcon(currentPlayingKey, true);
@@ -174,7 +182,7 @@ function updatePlayerUI(isPlaying, title = null) {
 
 function createHeartShower() {
   const container = document.body;
-  const colors = ["#ec4899", "#8b5cf6", "#d946ef", "#a855f7"];
+  const colors = ["#ec4899", "#f472b6", "#f9a8d4", "#ffffff", "#d946ef"];
 
   for (let i = 0; i < 30; i++) {
     const heart = document.createElement("div");
